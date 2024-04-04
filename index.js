@@ -1,5 +1,5 @@
 import express, { urlencoded } from "express";
-import formularioRoute from './Routes/FormularioRoutes.js'
+import Routes from './Routes/Routes.js'
 const app = express();
 const port = 5000
 
@@ -7,6 +7,6 @@ const port = 5000
 app.use(express.static('public'))
 app.use(urlencoded({extended:true}))
 
-app.use('/',formularioRoute)
+app.use('/',Routes)
 app.listen(port, ()=>console.log(`Servidor ejecutado http://localhost:${5000}`))
 

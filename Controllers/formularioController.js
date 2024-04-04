@@ -15,6 +15,7 @@ export const DownloadRegister = (req, res)=>{
         res.setHeader('Content-Disposition', `attachment; filename=${filename}`);
         const fileStream = fs.createReadStream(filePath);
         fileStream.pipe(res);
+        
     } else {
         // Si el archivo no existe, enviar una respuesta de error
         res.status(404).send('Archivo no encontrado');
@@ -22,7 +23,6 @@ export const DownloadRegister = (req, res)=>{
 }
 export const SearchRegister = (req,res)=>{
         const {id, lastName} = req.query
-        console.log(req.body)
         if(id!== '' && lastName !== ''){
                 const fileName = `data/${lastName}_${id}.txt`
                 res.redirect(`/download/${fileName}`);
@@ -37,7 +37,7 @@ export const CreateRegister= (req, res)=>{
                         const fileName = `data/${lastName}_${id}.txt`
                         fs.writeFile(fileName, data, (error)=>{
                                 if(error){
-                                        console.log(`Error: ${error}`)
+                                        res.send(`Error: ${error}`)
                                 }else{
                                         res.redirect(`/download/${fileName}`);
                                 }

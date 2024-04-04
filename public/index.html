@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="./output.css" rel="stylesheet">
-    <title>Document</title>
+    <title>BibliotecaCuc</title>
 </head>
 <body class="flex flex-col items-center justify-center w-full h-[600px] md:h-[500px] ">
     <div class="w-8/12 text-end mb-4">
-        <a class="border py-2 px-4 border-blue-500 font-medium text-blue-500 rounded-md" href="/searchRegister.html">Buscar Registro</a>
+        <a class="border py-2 px-4 border-blue-500 font-medium text-blue-500 rounded-md" href="/registrySearch.html">Buscar Registro</a>
     </div>
-    <form action="http://localhost:5000/formulario" method="post" class="flex flex-col items-center justify-center gap-4 border w-10/12 md:w-8/12 px-4 py-6 border-blue-500/75 rounded-md"  >
+    <form id="form" action="http://localhost:5000/formulario" method="post" class="flex flex-col items-center justify-center gap-4 border w-10/12 md:w-8/12 px-4 py-6 border-blue-500/75 rounded-md"  >
         <h1 class="font-semibold text-4xl text-blue-500 text-center border-b-2 border-b-blue-500">Formulario</h1>
         <div class="flex flex-col items-center justify-around gap-4 w-full max-w-[900px] lg:flex-row md:w-5/6 py-4 px-4">
         
@@ -43,14 +43,21 @@
             </div>
             <div class="flex flex-col gap-2 w-1/2">
                 <label class="text-lg text-blue-500 font-medium" for="year">Year:</label>
-                <input class="border border-blue-500/75 rounded-md" type="number" name="year" >
+                <input class="border border-blue-500/75 rounded-md" type="number" name="year" min="1000" max="2024" >
             </div>
         </div>
         </div>
     </div>
-        
-   
         <Button class="border border-blue-500 w-1/2 h-8 md:w-1/4 items-center rounded-md text-blue-500 font-medium" type="submit">Enviar</Button>
     </form>
+    <script>
+        document.getElementById('form').addEventListener('submit', function(event) {
+            setTimeout(() => {
+                event.preventDefault();
+                const inputs = document.querySelectorAll('input');
+                inputs.forEach(input => input.value = '');
+            }, 1000);
+        });
+    </script>
 </body>
 </html>
