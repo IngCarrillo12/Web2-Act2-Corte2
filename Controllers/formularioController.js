@@ -8,16 +8,11 @@ import path from 'path';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const projectDir = path.join(__dirname, '..');
-export const SuccessRegister = (req, res)=>{
+export const DownloadRegister = (req, res)=>{
         const { filename } = req.params;
-        
         const filePath = path.join(projectDir, 'data', filename);
-        console.log(filePath)
     if (fs.existsSync(filePath)) {
-        // Configurar el encabezado de respuesta para la descarga
         res.setHeader('Content-Disposition', `attachment; filename=${filename}`);
-        
-        // Crear un stream de lectura del archivo y enviarlo como respuesta
         const fileStream = fs.createReadStream(filePath);
         fileStream.pipe(res);
     } else {
@@ -25,13 +20,20 @@ export const SuccessRegister = (req, res)=>{
         res.status(404).send('Archivo no encontrado');
     }
 }
-
+export const SearchRegister = (req,res)=>{
+        const {id, lastName} = req.query
+        console.log(req.body)
+        if(id!== '' && lastName !== ''){
+                const fileName = `data/${lastName}_${id}.txt`
+                res.redirect(`/download/${fileName}`);
+        }
+}
 export const CreateRegister= (req, res)=>{
         try {   
                 const id = uuidv4()
                 const {name, lastName, title, autor, editorial, year} = req.body
                 if(id!== '' && name !== '' && lastName!== '' && title!== '' && autor!== '' && editorial!== '' && year!== '' ){
-                        const data = JSON.stringify(req.body)
+                        const data = JSON.stringify({id:id,...req.body})
                         const fileName = `data/${lastName}_${id}.txt`
                         fs.writeFile(fileName, data, (error)=>{
                                 if(error){
